@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Gitコマンドをハンズオンで覚えるサイト【一覧から出題】">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<category>Gitコマンド学習ツール【一覧から出題】</category>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="main-wrapper">
+    
+    <section>
+        <div id ="attention">
+            <div id = "header">
+                <a href="privacypolicy.html">プライバシーポリシー</a>
+                <h2>Gitコマンド学習ツール</h2>
+            </div>
+        </div>
+        <!-- <div id="question_now">
+            <div id ="output_num">
+                <div id="output_question_current_num"></div><div id="output_question_num"></div>
+            </div>
+            
+            <div id="output_question"></div>
+            <textarea name="answer_area" id="answer_area" placeholder="解答する"></textarea>
+            <div id = "buttons">
+                <button id = "answer_btn" onclick="answerDisplay()">解答を表示</button>
+                <button id = "answer_btn_hide" onclick="answerDisplayNone()">解答を非表示</button>
+            </div>  
+            <div id="output_answer"></div>
+        </div>
+        
+        <div id="end_view"></div>
+        <div id="self_check_result"></div>
+        <button id="self_check_ngreturn" onclick="self_check_ngreturn()">NG問題を再出題</button> -->
+            
+        <div id="form_area">
+            <div id="select_area">
+                <input type="button" id="beginner_btn" value="初級を出題" onclick="order_mode()">
+                <div id="beginner_text">
+                    <p>
+                        Gitで使用頻度が高い基本的なコマンド。<br>
+                        例：add、commit、checkout、pull、push<br>
+                        <button id="modalBeginnerBtn">一覧</button>
+                    </p>
+                </div>
+            </div>
+            <div id="select_area">
+                <input type="button" id="intermediate_btn" value="中級を出題" onclick="order_mode()">
+                <div id="intermediate_text">
+                    <p>
+                        様々な機能やオプションを利用し、さらに利便性が高くなるコマンド。覚えておくと便利なコマンド。<br>
+                        例：stash、<br>
+                        <button>一覧</button>
+                    </p>
+                </div>
+            </div>
+            <div id="select_area">
+                <input type="button" id="advanced_btn" value="上級を出題" onclick="order_mode()">
+                <div id="advanced_text">
+                    <p>
+                        基本の操作よりも細部の操作が可能になるコマンド<br>
+                        例：cherrypick、<br>
+                        <button>一覧</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+            
+            
+        <!-- モーダルのコンテンツ -->
+        <div id="BeginnerModal" class="modal">
+            <div class="modal-content">
+            <span class="close">&times;</span>
+                
+                
+            <div>
+                
+                <ul id="commandList"></ul>
+
+            </div>
+        </div>
+    </section>
+
+
+    
+    <h1>ユーザー一覧</h1>
+  
+    <script>
+      // JSONファイルのパス
+
+    </script>
+      
+            
+</div>
+
+
+<script src="script.js"></script>
+</body>
+</html>

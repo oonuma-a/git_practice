@@ -1,0 +1,23 @@
+{
+  "commands": [
+    {
+      "category": "git add",
+      "program": "add .",
+      "text": "作業中の全てのファイルをステージングに登録する。",
+      "remarks": "※テスト",
+      "level": "1"
+    },
+    {
+      "category": "git add",
+      "program": "add .",
+      "text": "作業中の全てのファイルをステージングに登録する。",
+      "level": "1"
+    },
+    {
+      "category": "git commit",
+      "program": "commit -m \"message\"",
+      "text": "コミットメッセージを直接指定します。\nステージングエリアの変更点をコミットします。\nステージングされたファイルの状態を記録し、変更履歴に追加します。\nメッセージは変更内容を説明する短い説明です。",
+      "level": "1"
+    }
+  ]
+}
