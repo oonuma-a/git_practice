@@ -3,21 +3,43 @@
     {
       "category": "git add",
       "program": "add .",
-      "text": "作業中の全てのファイルをステージングに登録する。",
-      "remarks": "※テスト",
+      "text": "1作業中の全てのファイルをステージングに登録する。",
+      "remarks": "※111",
       "level": "1"
     },
     {
       "category": "git add",
       "program": "add .",
-      "text": "作業中の全てのファイルをステージングに登録する。",
+      "text": "1-2作業中の全てのファイルをステージングに登録する。",
+      "remarks": "※テ222スト",
       "level": "1"
     },
     {
-      "category": "git commit",
-      "program": "commit -m \"message\"",
-      "text": "コミットメッセージを直接指定します。\nステージングエリアの変更点をコミットします。\nステージングされたファイルの状態を記録し、変更履歴に追加します。\nメッセージは変更内容を説明する短い説明です。",
-      "level": "1"
+      "category": "git push",
+      "program": "push origin master",
+      "text": "2ローカルリポジトリの変更をリモートリポジトリにアップロードします。",
+      "remarks": "リモートリポジトリ：master",
+      "pre": "master",
+      "level": "2"
+    },
+    {
+      "category": "git push",
+      "program": "push origin master",
+      "text": "2-2ローカルリポジトリの変更をリモートリポジトリにアップロードします。",
+      "remarks": "※2テスト",
+      "level": "2"
+    },
+    {
+      "category": "git merge",
+      "program": "merge branchname",
+      "text": "3指定したブランチの変更内容を現在のブランチに取り込みます。",
+      "level": "3"
+    },
+    {
+      "category": "git merge",
+      "program": "merge branchname",
+      "text": "3-2指定したブランチの変更内容を現在のブランチに取り込みます。",
+      "level": "3"
     }
   ]
 }
