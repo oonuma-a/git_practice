@@ -234,7 +234,8 @@ hr{
 .git-string {
     color: rgb(96, 245, 171);
 }
-.command-remarks {
+#command_remarks {
+    color: #555;
     font-size: 13px;
     margin: 0 0 5px 0;
 }

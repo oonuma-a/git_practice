@@ -84,8 +84,7 @@ function displayCommand(jsonString) {
       text.classList.add("command-text");
       li.appendChild(text);
   
-      if(command.remarks) {
-          alert(1);
+      if(command.remarks != null) {
           const remarks = document.createElement('p');
           remarks.textContent = `${command.remarks}`;
           remarks.classList.add("command-remarks");
@@ -236,8 +235,13 @@ function displayQuestion() {
   
   if (currentIndex == currentMaxCount) {
     document.getElementById('command_text').innerText = '全ての問題が終了しました。';
+    document.getElementById('command_program').innerText = '';
+    document.getElementById('command_remarks').innerText = '';
   } else {
     document.getElementById('command_text').innerText = command.text;
+      if(command.remarks != null) {
+        document.getElementById('command_remarks').innerText = "※"+command.remarks;
+      }
   }
   document.getElementById('hidden_form').style.display = 'block';
 
@@ -290,6 +294,7 @@ document.getElementById('hidden_form').addEventListener('submit', checkAnswer);
 function showNext() {
   currentIndex++;
   document.getElementById('command_program').innerText = '';
+  document.getElementById('command_remarks').innerText = '';
   document.getElementById('input_text').value = '';
   displayQuestion();
   document.getElementById('message').innerText = '';
@@ -300,6 +305,7 @@ function showNext() {
 function showPrevious() {
   currentIndex--;
   document.getElementById('command_program').innerText = '';
+  document.getElementById('command_remarks').innerText = '';
   document.getElementById('input_text').value = '';
   displayQuestion();
   document.getElementById('message').innerText = '';
