@@ -1,45 +1,997 @@
 {
   "commands": [
-    {
-      "category": "git add",
-      "program": "add .",
-      "text": "1作業中の全てのファイルをステージングに登録する。",
-      "remarks": "※111",
-      "level": "1"
-    },
-    {
-      "category": "git add",
-      "program": "add .",
-      "text": "1-2作業中の全てのファイルをステージングに登録する。",
-      "remarks": "※テ222スト",
-      "level": "1"
-    },
-    {
-      "category": "git push",
-      "program": "push origin master",
-      "text": "2ローカルリポジトリの変更をリモートリポジトリにアップロードします。",
-      "remarks": "リモートリポジトリ：master",
-      "pre": "master",
-      "level": "2"
-    },
-    {
-      "category": "git push",
-      "program": "push origin master",
-      "text": "2-2ローカルリポジトリの変更をリモートリポジトリにアップロードします。",
-      "remarks": "※2テスト",
-      "level": "2"
-    },
-    {
-      "category": "git merge",
-      "program": "merge branchname",
-      "text": "3指定したブランチの変更内容を現在のブランチに取り込みます。",
-      "level": "3"
-    },
-    {
-      "category": "git merge",
-      "program": "merge branchname",
-      "text": "3-2指定したブランチの変更内容を現在のブランチに取り込みます。",
-      "level": "3"
-    }
+  {
+    "category": "git add",
+    "program": "git add .",
+    "text": "作業ディレクトリ内にある変更をステージングエリアに追加する。\nカレントディレクトリ以下の変更のみ次のコミットに含める。",
+    "level": "1"
+  },
+  {
+    "category": "git add",
+    "program": "git add dir/file.txt",
+    "text": "指定したディレクトリパスとファイルをステージングエリアに追加する。\nステージングエリアに登録した特定のファイルの変更のみ次のコミットに含める。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "1"
+  },
+  {
+    "category": "git add",
+    "program": "git add dir/*",
+    "text": "指定したディレクトリ内のすべてのファイルをステージングエリアに追加する（ワイルドカード使用）",
+    "level": "1"
+  },
+  {
+    "category": "git add",
+    "program": "git add -A",
+    "text": "作業ディレクトリ内にある全てのファイルの変更をステージングエリアに追加する。\nオプションでコマンドを実行しているカレントディレクトリの位置に関わらず作業ディレクトリ内にある全ての変更をステージングし、\n次のコミットに含める。",
+    "level": "1"
+  },
+  {
+    "category": "git add",
+    "program": "git add -p dir/file.txt",
+    "text": "指定したファイルの変更を分割し、\nユーザーがそれぞれのブロックに対して操作を選択してステージングエリアに追加する。\nブロックごとにステージングエリアに登録する、\n登録しないなど確認しながら追加する。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "3"
+  },
+  {
+    "category": "git add",
+    "program": "git add -u",
+    "text": "ステージングエリアに登録する時、\n変更されたファイルをステージングする。\n追跡中のファイルの変更のみが対象で、\n新規追加されたファイルは含まない。",
+    "level": "2"
+  },
+  {
+    "category": "git commit",
+    "program": "git commit",
+    "text": "ステージングエリアに登録した変更をコミットする。\nコマンド実行後にコミットメッセージを入力するためのエディタが開き、\n保存するとコミットされる。",
+    "level": "1"
+  },
+  {
+    "category": "git commit",
+    "program": "git commit -m \"message\"",
+    "text": "ステージングエリアに登録した変更をコミットする。\nコミットメッセージをコマンドから直接入力する。",
+    "remarks": "メッセージ：\"message\"",
+    "pre": "\"message\"",
+    "level": "1"
+  },
+  {
+    "category": "git commit",
+    "program": "git commit -am \"message\"",
+    "text": "作業ディレクトリで変更された全てのファイルをステージングエリアに登録とコミットを行う。\nコマンド実行後にコミットメッセージを入力するためのエディタが開き、\n保存するとコミットされる。\n新規作成したファイルはステージングエリアに登録されない。",
+    "remarks": "コミットメッセージ：message",
+    "pre": "\"message\"",
+    "level": "1"
+  },
+  {
+    "category": "git commit",
+    "program": "git commit --amend -m \"message\"",
+    "text": "直前のコミットを修正して、\n新しいコミット内容に修正する。",
+    "remarks": "リモートリポジトリにpush後の使用は非推奨。\nコミットメッセージ：message",
+    "pre": "\"message\"",
+    "level": "2"
+  },
+  {
+    "category": "git blame",
+    "program": "git blame dir/file.txt",
+    "text": "ファイルの各行の編集情報を表示し、\n誰が編集し、\nどのコミットで編集したか表示します。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git blame",
+    "program": "git blame -L 10,12 dir/file.txt",
+    "text": "ファイルの各行の編集情報を表示し、\n誰が編集し、\nどのコミットで編集したか表示する。\nオプションで何行目から何行目か指定した範囲の行におけるファイルの変更を表示する。",
+    "remarks": "行：10行目から12行目\nファイル名：dir/file.txt",
+    "pre": "10,12 dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git checkout",
+    "program": "git checkout develop",
+    "program2": "git branch develop",
+    "text": "新しいブランチを作成する。\n新しいブランチはコマンドを実行したHEADの位置から分岐し、\nブランチ作成後のブランチは現在のブランチに留まる。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "1"
+  },
+  {
+    "category": "git checkout",
+    "program": "git checkout COMMITID1 dir/file.txt",
+    "text": "指定したコミットの特定のファイルを指定のディレクトリに復元する。\n復元した変更はステージングには登録されていない状態で戻る。",
+    "remarks": "コミットID：COMMITID1、\nファイル名：dir/file.txt",
+    "pre": "COMMITID1 dir/file.txt",
+    "level": "1"
+  },
+  {
+    "category": "git checkout",
+    "program": "git checkout develop",
+    "program2": "git switch develop",
+    "text": "指定した名前の既存のブランチに切り替える。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "1"
+  },
+  {
+    "category": "git checkout",
+    "program": "git checkout -b develop",
+    "program2": "git switch -c develop",
+    "text": "指定した名前の新しいブランチを作成し、\n新規ブランチに切り替える。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "1"
+  },
+  {
+    "category": "git checkout",
+    "program": "git checkout master dir/file.txt",
+    "text": "指定したブランチから指定したファイルまたはディレクトリを現在のブランチに反映する。",
+    "remarks": "ブランチ名：master、ファイル名：dir/file.txt",
+    "pre": "master dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git checkout",
+    "program": "git checkout -- dir/file.txt",
+    "text": "指定したファイルを変更前の最新のコミットの状態に戻す。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git checkout",
+    "program": "git checkout .",
+    "program2": "git restore .",
+    "text": "ステージングエリアに反映されていない全てのファイルの変更を取り消して元の状態にリセットする（カレントディレクトリ配下）",
+    "level": "1"
+  },
+  {
+    "category": "git checkout",
+    "program": "git checkout -",
+    "program2": "git switch -",
+    "text": "現在のブランチに切り替える直前にいたブランチに戻る。",
+    "level": "1"
+  },
+  {
+    "category": "git push",
+    "program": "git push",
+    "text": "ローカルリポジトリの変更内容をリモートリポジトリにプッシュ（アップロード）する。\n現在のブランチがトラッキングしているリモートリポジトリに変更をプッシュする。",
+    "level": "1"
+  },
+  {
+    "category": "git push",
+    "program": "git push origin master",
+    "text": "ローカルリポジトリの変更をリモートリポジトリのブランチにプッシュ（アップロード）する。",
+    "remarks": "リモートリポジトリ名：origin\nブランチ名：master",
+    "pre": "master",
+    "level": "1"
+  },
+  {
+    "category": "git push",
+    "program": "git push origin",
+    "text": "ローカルリポジトリのブランチの変更をリモートリポジトリの同名ブランチにプッシュする。\nコマンドを実行することで、\n現在のブランチの変更がリモートリポジトリに反映される。",
+    "remarks": "リモートリポジトリ名：origin",
+    "pre": "origin",
+    "level": "1"
+  },
+  {
+    "category": "git push",
+    "program": "git push master",
+    "text": "ローカルリポジトリの指定したブランチの変更をリモートリポジトリの指定したブランチにプッシュする。",
+    "remarks": "ブランチ名：master",
+    "pre": "master",
+    "level": "1"
+  },
+  {
+    "category": "git push",
+    "program": "git push -f",
+    "text": "コミットを強制プッシュする。",
+    "level": "3"
+  },
+  {
+    "category": "git push",
+    "program": "git push -n",
+    "text": "リモートリポジトリへのプッシュは行わずにプッシュされる内容のみ表示する。",
+    "level": "3"
+  },
+  {
+    "category": "git push(タグ)",
+    "program": "git push origin v1.2.3",
+    "text": "指定したタグをリモートリポジトリにプッシュする。",
+    "remarks": "タグ名：v1.2.3",
+    "pre": "v1.2.3",
+    "level": "2"
+  },
+  {
+    "category": "git push(タグ)",
+    "program": "git push --tags:",
+    "text": "ローカルで作成したタグをリモートリポジトリにプッシュする。",
+    "level": "2"
+  },
+  {
+    "category": "git merge",
+    "program": "git merge master",
+    "text": "指定したブランチの変更内容を現在のブランチに取り込み、\n変更を統合する。",
+    "remarks": "ブランチ名：master",
+    "pre": "master",
+    "level": "1"
+  },
+  {
+    "category": "git merge",
+    "program": "git merge origin/master",
+    "text": "指定したリモートリポジトリのブランチを、\nローカルリポジトリにある現在のブランチにマージする。",
+    "remarks": "リモートリポジトリ名：origin ブランチ名：master",
+    "pre": "origin/master",
+    "level": "1"
+  },
+  {
+    "category": "git merge",
+    "program": "git merge master",
+    "text": "ローカルリポジトリにある指定したブランチの変更を、\n現在のブランチにマージする。",
+    "remarks": "ブランチ名：master",
+    "pre": "master",
+    "level": "1"
+  },
+  {
+    "category": "git merge",
+    "program": "git merge --no-ff",
+    "text": "マージをファストフォワードではなく、\nノンファストフォワードで行う。\n常に新しいコミットを作成する。",
+    "level": "3"
+  },
+  {
+    "category": "git merge",
+    "program": "git merge --squash",
+    "text": "マージしたブランチのコミットを作成せず、\n一つのコミットにまとめる。",
+    "level": "2"
+  },
+  {
+    "category": "git merge",
+    "program": "git merge —abort",
+    "text": "マージ後にコンフリクトが発生した際、\n発生したコンフリクトなどを解消せずに、\nマージを中止します。",
+    "level": "2"
+  },
+  {
+    "category": "git merge",
+    "program": "git merge --squash origin/master",
+    "text": "リモートブランチの変更をまとめて、\n新しいコミットを現在のブランチに作成します。",
+    "remarks": "リモートリポジトリ名：origin、\nブランチ名：master",
+    "pre": "master",
+    "level": "2"
+  },
+  {
+    "category": "git merge",
+    "program": "git merge --squash develop",
+    "text": "指定したブランチを現在のブランチにマージする時、\nコミット全てのコミットを1つのコミットにまとめてマージする。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "2"
+  },
+  {
+    "category": "git branch",
+    "program": "git branch",
+    "text": "ローカルリポジトリのブランチ一覧を表示する。",
+    "remarks": "現在のブランチはアスタリスク (*) が付与。",
+    "level": "1"
+  },
+  {
+    "category": "git branch",
+    "program": "git branch -a",
+    "text": "ローカルとリモートのリポジトリにある全てのブランチを一覧表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git branch",
+    "program": "git branch -r",
+    "text": "リモートリポジトリのブランチ一覧を表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git branch",
+    "program": "git branch develop",
+    "program2": "git checkout develop",
+    "text": "新しいブランチを作成する。\n新しいブランチはコマンドを実行したHEADの位置から分岐し、\nブランチ作成後のブランチは現在のブランチに留まる。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "1"
+  },
+  {
+    "category": "git branch",
+    "program": "git branch --merged master",
+    "text": "現在のブランチに既にマージされたブランチの一覧を表示する。",
+    "remarks": "ブランチ名：master",
+    "pre": "master",
+    "level": "2"
+  },
+  {
+    "category": "git branch",
+    "program": "git branch --no-merged master",
+    "text": "現在のブランチにまだマージされていないコミットが存在するブランチの一覧を表示する。",
+    "remarks": "ブランチ名：master",
+    "pre": "master",
+    "level": "2"
+  },
+  {
+    "category": "git branch",
+    "program": "git branch -d develop",
+    "text": "指定した名前のブランチを削除する。\nマージされていない変更やコミットが存在する場合は削除せずエラーとなる。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "2"
+  },
+  {
+    "category": "git branch",
+    "program": "git branch -D develop",
+    "text": "指定したブランチを強制的に削除する。\nマージされていない変更やコミットが存在する場合も削除を行う。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "2"
+  },
+  {
+    "category": "git cherry-pick",
+    "program": "git cherry-pick COMMITID1",
+    "text": "別のブランチにある指定したコミットを現在のブランチに直接取り込む。",
+    "remarks": "コミットID：COMMITID1",
+    "pre": "COMMITID1",
+    "level": "2"
+  },
+  {
+    "category": "git cherry-pick",
+    "program": "git cherry-pick COMMITID1 COMMITID3",
+    "text": "指定した始点のコミットから終点のコミットまでの範囲のコミットを現在のブランチに取り込む。",
+    "remarks": "コミットID：COMMITID1～COMMITID3",
+    "pre": "COMMITID1 COMMITID3",
+    "level": "2"
+  },
+  {
+    "category": "git cherry-pick",
+    "program": "git cherry-pick --no-commit COMMITID1",
+    "text": "チェリーピックを行う際に自動でコミットせず、\nコミットの変更のみ作業ディレクトリに適用する。",
+    "remarks": "コミットID：COMMITID1",
+    "pre": "COMMITID1",
+    "level": "2"
+  },
+  {
+    "category": "git switch",
+    "program": "git switch develop",
+    "program2": "git checkout develop",
+    "text": "指定した名前の既存のブランチに切り替える。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "1"
+  },
+  {
+    "category": "git switch",
+    "program": "git switch -c develop",
+    "program2": "git checkout -b develop",
+    "text": "指定した名前の新しいブランチを作成し、\n新規ブランチに切り替える。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "1"
+  },
+  {
+    "category": "git switch",
+    "program": "git switch -C develop",
+    "text": "強制的にブランチを作成する。\n指定したブランチ名が既に存在している場合でも、\n強制的にブランチを上書きして作成する。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "1"
+  },
+  {
+    "category": "git switch",
+    "program": "git switch -d  COMMITID1",
+    "text": "現在のブランチから一時的に指定したコミットに戻る。\n移動したコミットからから元のブランチに戻るにはgit switchでブランチを指定する。",
+    "remarks": "コミットID：COMMITID1",
+    "pre": "COMMITID1",
+    "level": "2"
+  },
+  {
+    "category": "git switch",
+    "program": "git switch -",
+    "program2": "git checkout -",
+    "text": "現在のブランチに切り替える直前にいたブランチに戻る。",
+    "level": "1"
+  },
+  {
+    "category": "git restore",
+    "program": "git restore .",
+    "program2": "git checkout .",
+    "text": "ステージングエリアに反映されていないファイルの変更を取り消して元の状態にリセットする（カレントディレクトリ配下）",
+    "level": "1"
+  },
+  {
+    "category": "git restore",
+    "program": "git restore dir/file.txt",
+    "text": "ステージングエリアに反映されていない指定ファイルの変更を取り消して元の状態にリセットする。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "1"
+  },
+  {
+    "category": "git restore",
+    "program": "git restore --staged dir/file.txt",
+    "text": "ステージングエリアに登録した変更ファイルのうち、\n指定したファイルの変更を取り消して元の状態にリセットする。",
+    "remarks": "ワーキングディレクトリの変更は保持。\nファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "1"
+  },
+  {
+    "category": "git restore",
+    "program": "git restore -S COMMITID1",
+    "text": "指定したコミットまでの作業内容を削除して元の状態にリセットする。",
+    "remarks": "コミットID：COMMITID1",
+    "pre": "COMMITID1",
+    "level": "1"
+  },
+  {
+    "category": "git restore",
+    "program": "git restore --source=HEAD dir/file.txt",
+    "text": "ステージングエリアに登録されている指定したファイルの変更を取り消し、\n指定したコミットIDの状態にリセットする。",
+    "remarks": "コミット：HEAD（現在いるブランチの位置）、\nファイル名：dir/file.txt",
+    "pre": "HEAD dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git restore",
+    "program": "git restore --staged dir/file.txt",
+    "text": "ステージングエリアに登録されている指定したファイルの変更を最新のコミット状態にリセットする。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "1"
+  },
+  {
+    "category": "git reset",
+    "program": "git reset HEAD~1",
+    "text": "作業ディレクトリの変更は残したまま、\n最後のコミットを取り消す。",
+    "remarks": "最後のコミット：HEAD~1",
+    "pre": "HEAD~1",
+    "level": "1"
+  },
+  {
+    "category": "git reset",
+    "program": "git reset dir/file.txt",
+    "text": "ステージングエリアに登録した変更を取り消す（指定のファイルのみ）",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "1"
+  },
+  {
+    "category": "git reset",
+    "program": "git reset --hard COMMITID1",
+    "text": "指定したコミットIDまでの全ての変更を取り消す。",
+    "remarks": "git reflogからreset履歴が確認可能。\nコミットを--hardで削除した場合はresetしたコミットに復元可能。",
+    "pre": "COMMITID1",
+    "level": "1"
+  },
+
+  {
+    "category": "git reset",
+    "program": "git reset --hard ORIG_HEAD",
+    "text": "直前のマージやリベースの操作を取り消す。",
+    "remarks": "reset用の1つ前のコミット：ORIG_HEAD",
+    "pre": "ORIG_HEAD",
+    "level": "2"
+  },
+  {
+    "category": "git reset",
+    "program": "git reset --soft HEAD^",
+    "text": "直前のコミットを取り消して、\n変更内容をステージングエリアに保持する。\nコミット値に指定したコミットを削除する。\nコミット値にHEAD^を指定することで直前のコミットを取り消す。",
+    "remarks": "直前のコミット：HEAD^",
+    "pre": "HEAD^",
+    "level": "1"
+  },
+  {
+    "category": "git reset",
+    "program": "git reset --hard HEAD^",
+    "text": "直前のコミットと変更内容を完全に削除する。\nコミット値に指定した場合、\n指定したコミットとステージングエリアに登録した変更、\n作業ディレクトリの変更など作業中の内容を全てリセットする。\n一度もコミットしていない変更をgit reset --hardで消した場合の復元 git fsck --lost-found→git show",
+    "remarks": "直前のコミット：HEAD^",
+    "pre": "HEAD^",
+    "level": "1"
+  },
+  {
+    "category": "git reset",
+    "program": "git reset --mixed HEAD",
+    "text": "作業ディレクトリの変更を保持したまま、\nステージングエリアに登録した変更を取り消す。",
+    "remarks": "コミット位置：HEAD",
+    "pre": "HEAD",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log",
+    "text": "コミットログ（履歴）を表示する。\nリポジトリのコミット履歴を表示し、\n各コミットの情報（コミットID、\nコミットしたユーザー、\n日時、\nメッセージなど）を表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log dir/file.txt",
+    "text": "コミットログから指定したファイルの変更履歴のみ表示する。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log master",
+    "text": "コミットログから現在のブランチに存在する変更履歴のみ表示する。",
+    "remarks": "ブランチ名：master",
+    "pre": "master",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log --oneline",
+    "text": "コミットログをコミット値とメッセージのみ一行の短縮形式で表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log -p",
+    "text": "コミットログからコミットごとの変更内容を表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log -S キーワード",
+    "text": "コミットログから指定した文字を含むコミットメッセージとコミット内容を検索する。",
+    "remarks": "検索キーワード：キーワード",
+    "pre": "キーワード",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log --no-merges",
+    "text": "コミットログからマージコミットを除外して表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log —since=yyyy-mm-dd —until=yyyy-mm-dd",
+    "text": "指定した期間のコミットログを表示する。",
+    "remarks": "期間：yyyy-mm-01 yyyy-mm-02",
+    "pre": "yyyy-mm-01 yyyy-mm-02",
+    "level": "1"
+  },
+  {
+    "category": "git log",
+    "program": "git log --graph",
+    "text": "コミットグラフを表示する。",
+    "level": "2"
+  },
+  {
+    "category": "git log",
+    "program": "git log --author=user_name",
+    "text": "指定したユーザーが行ったコミットのみを表示する。\nユーザー名はgit logなどから確認可能。",
+    "remarks": "ユーザー名：user_name",
+    "pre": "user_name",
+    "level": "2"
+  },
+  {
+    "category": "git log",
+    "program": "git log --grep=キーワード",
+    "text": "指定したキーワードを含むコミットのみを表示する。",
+    "remarks": "キーワード：キーワード",
+    "pre": "キーワード",
+    "level": "2"
+  },
+  {
+    "category": "git log",
+    "program": "git log --stat",
+    "text": "コミットごとの変更の統計情報を表示する。",
+    "level": "2"
+  },
+  {
+    "category": "git reflog",
+    "program": "git reflog",
+    "text": "ローカルリポジトリで実行された操作履歴のログを表示する。\nコミットやリセット、\nブランチの切り替えなど過去に行った操作を表示し、\nコミットやリセットの復元にログを使用する。",
+    "level": "2"
+  },
+  {
+    "category": "git reflog",
+    "program": "git reflog --all",
+    "text": "すべてのリモートトラッキングブランチを含む操作のログを表示する。",
+    "level": "2"
+  },
+  {
+    "category": "git pull",
+    "program": "git pull",
+    "text": "リモートリポジトリから最新の変更を取得し、\n変更内容を適用する。\nfetchとmergeを同時に行う。",
+    "level": "1"
+  },
+  {
+    "category": "git pull",
+    "program": "git pull origin master",
+    "text": "指定したリモートリポジトリの指定したブランチから最新の変更を取得し、\n変更内容を適用する。\nfetchとmergeを同時に行う。",
+    "remarks": "リモートリポジトリ名：origin ブランチ名：master",
+    "pre": "origin master",
+    "level": "1"
+  },
+  {
+    "category": "git fetch",
+    "program": "git fetch",
+    "text": "リモートリポジトリから最新の変更を取得する。\nマージは行わない。",
+    "level": "1"
+  },
+  {
+    "category": "git fetch",
+    "program": "git fetch --prune",
+    "text": "リモートリポジトリから最新の変更を取得する。\nマージは行わない。\nリモートリポジトリで存在しない削除されたリモートブランチが、\nローカルリポジトリのリモート追跡ブランチリストから削除されます。",
+    "level": "1"
+  },
+  {
+    "category": "git status",
+    "program": "git status",
+    "text": "現在の作業ディレクトリとステージングエリアに登録されている状態を表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git status",
+    "program": "git status -s",
+    "text": "現在の作業ディレクトリとステージングエリアに登録されている状態を短縮形式で表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git status",
+    "program": "git status -sb",
+    "text": "ブランチ名を含む現在の作業ディレクトリとステージングエリアに登録されている状態を短縮形式で表示する(-bのみの場合、\n表示に変化なし)",
+    "level": "2"
+  },
+  {
+    "category": "git status",
+    "program": "git status -u",
+    "text": "現在の作業ディレクトリにある未追跡ファイルの状態を表示する(-bのみの場合、\n表示に変化なし)",
+    "level": "2"
+  },
+  {
+    "category": "git status",
+    "program": "git status -v",
+    "text": "詳細な形式でステージングエリアに登録されている状態を表示する（作業ディレクトリの変更除く）",
+    "level": "2"
+  },
+  {
+    "category": "git status",
+    "program": "git status -vv",
+    "text": "非常に詳細な形式で詳細な形式で作業ディレクトリとステージングエリアの状態を表示する（ブランチのトラッキング情報やリモートブランチの状態など）",
+    "level": "3"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff",
+    "text": "作業ディレクトリと最新コミットの変更内容を表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff --staged",
+    "program2": "git diff —-cached",
+    "text": "ステージングエリアと最新コミットの差分を表示する。",
+    "level": "1"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff HEAD^",
+    "text": "現在の最新コミットと1つ前のコミットの間の差分を表示する。",
+    "remarks": "直前のコミット：HEAD^",
+    "pre": "HEAD^",
+    "level": "1"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff COMMITID1 COMMITID2",
+    "text": "指定した2つのコミット間の差分を表示する。",
+    "remarks": "コミット1：COMMITID1、\nコミット2：COMMITID2",
+    "pre": "COMMITID1 COMMITID2",
+    "level": "2"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff -r COMMITID1",
+    "text": "指定したコミットIDの状態と現在の作業ディレクトリの状態を比較し、\n差分を表示する。",
+    "remarks": "コミット：COMMITID1",
+    "pre": "COMMITID1",
+    "level": "2"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff -R",
+    "text": "diffで比較元とするブランチと比較先ブランチを入れ替える（比較対象の変更前・変更後を入れ替える）",
+    "level": "2"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff master develop",
+    "text": "指定した2つのローカルブランチ同士を比較する。",
+    "remarks": "ブランチ名：master、develop",
+    "pre": "master develop",
+    "level": "1"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff master origin/master",
+    "text": "ローカルリポジトリの指定したブランチとリモートリポジトリの指定したブランチを比較する。",
+    "remarks":"リモートリポジトリ名：origin ブランチ名：master",
+    "pre": "origin/master",
+    "level": "1"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff HEAD origin/develop",
+    "text": "現在のローカルブランチとリモートブランチの差分を表示する。",
+    "remarks":"現在のローカルブランチ位置：HEAD、リモートリポジトリ名：origin、ブランチ名：develop",
+    "pre": "HEAD origin/develop",
+    "level": "1"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff —stat",
+    "text": "変更した行の数、\n情報を表示する\n git diff ブランチ名|コミット値 --name-only\n変更されたファイルのパスのみ表示",
+    "level": "2"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff -w",
+    "text": "空白のみの変更を無視して差分を表示する。",
+    "level": "3"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff --ignore-blank-lines",
+    "text": "空行のみの変更を無視して差分を表示する。",
+    "level": "3"
+  },
+  {
+    "category": "git diff",
+    "program": "git diff dir/file.txt",
+    "text": "作業ディレクトリ内の指定したファイルと最新のコミットとの差分を表示する。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "1"
+  },
+  {
+    "category": "git show",
+    "program": "git show HEAD",
+    "text": "指定されたコミットの詳細情報（コミットのハッシュ値、\nコミットしたユーザー、\n日時、\nコミットメッセージ、\n変更内容）を表示する。",
+    "remarks": "コミットID：HEAD",
+    "pre":"HEAD",
+    "level": "2"
+  },
+  {
+    "category": "git rebase",
+    "program": "git rebase master",
+    "text": "現在のブランチのコミットのベースを、\n分岐元の指定したブランチ（通常はリモートブランチ）から取り込んだ最新コミットを、\nブランチの先頭からリベースする。",
+    "remarks": "分岐元ブランチ：master",
+    "pre": "master",
+    "level": "2"
+  },
+  {
+    "category": "git rebase",
+    "program": "git rebase develop master",
+    "text": "指定したブランチのコミットのベースを、\n分岐元の指定したブランチ（通常はリモートブランチ）から取り込んだ最新コミットを新たに分岐元としてブランチの先頭からリベースする。",
+    "remarks": "適用先ブランチ：develop、\n分岐元ブランチ：master",
+    "pre": "develop master",
+    "level": "2"
+  },
+  {
+    "category": "git rebase",
+    "program": "git rebase --continue",
+    "text": "指定したブランチからrebase 時に発生したコンフリクトがあった際、\nコンフリクトを解消する修正をステージングエリアに登録し、\nrebaseの内容を反映する。",
+    "level": "2"
+  },
+  {
+    "category": "git rebase",
+    "program": "git rebase --skip",
+    "text": "ブランチをrebase時、\nコンフリクトが解消できない場合にコミットをスキップしてrebaseを続行する。",
+    "level": "2"
+  },
+  {
+    "category": "git rebase",
+    "program": "git rebase --abort",
+    "text": "ブランチをrebase 時、\nコンフリクトが解消できない場合にrebaseを中断する。",
+    "level": "2"
+  },
+  {
+    "category": "git rebase",
+    "program": "git rebase --onto master develop_A develop_A_B",
+    "text": "特定のブランチより分岐したブランチから、\nさらに分岐して作成されたブランチのベースを、\n分岐元のさらに分岐元のブランチを分岐元に変更して最新コミットをブランチの先頭からリベースする。",
+    "remarks": "分岐元ブランチ：master、\nmasterブランチ分岐先ブランチ：develop_A、\ndevelop_Aブランチ分岐先ブランチ：develop_A_B",
+    "pre": "master develop_A develop_A_B",
+    "level": "3"
+  },
+  {
+    "category": "git rebase",
+    "program": "git rebase -i COMMITID1",
+    "text": "現在のブランチのコミットのベースを、\n分岐元の指定したブランチ（通常はリモートブランチ）から取り込んだ最新コミットをエディタのコミットを確認しながら対話形式ででコミットを反映する（編集、\n統合、\n削除）",
+    "remarks":"コミットID：COMMITID1",
+    "pre": "COMMITID1",
+    "level": "3"
+  },
+  {
+    "category": "git rebase",
+    "program": "git rebase -i master",
+    "text": "指定したブランチからインタラクティブモードでリベースを行う。",
+    "remarks":"ブランチ名：master",
+    "pre": "master",
+    "level": "3"
+  },
+  {
+    "category": "git revert",
+    "program": "git revert COMMITID1",
+    "text": "指定したコミットの変更を打ち消す新しいコミットを作成して適用する。\nコマンド実行後は指定したコミットの変更を変更前の状態に戻す変更が適用された状態となる。",
+    "remarks": "コミットIDはgit reflog、\ngit logなどから確認可能\nコミットID：COMMITID1",
+    "pre": "COMMITID1",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash push",
+    "text": "作業ディレクトリの変更を一時的に退避し、\n作業ディレクトリを最新のコミット状態に戻す。\n変更はスタッシュとして保存される。",
+    "remarks": "v2.16.0以降でgit stash save コマンドは非推奨",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash push -m \"message\"",
+    "text": "スタッシュにコメントを指定して保存する。",
+    "remarks":"メッセージ：message",
+    "pre": "\"message\"",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash pop 0",
+    "text": "指定した番号のスタッシュした変更を取り出し、\n作業ディレクトリに反映する。\n取り出したスタッシュは削除する。\nスタッシュの番号を省略した場合、\n最後に退避したスタッシュを反映する。\nスタッシュの番号はstash listから確認可能",
+    "remarks": "スタッシュ番号：0",
+    "pre": "0",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash push dir/file.txt",
+    "text": "指定したファイルをスタッシュに保存する。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash apply 1",
+    "text": "指定した番号のスタッシュの変更を反映する。\n取り出したスタッシュは削除しない。\nスタッシュの番号を省略した場合、\n最後に退避したスタッシュを反映する。\nスタッシュの番号はstash listから確認可能",
+    "pre": "1",
+    "remarks": "スタッシュ番号：1",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash list",
+    "text": "スタッシュの一覧を表示する。",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash show",
+    "text": "スタッシュの変更内容を表示する。\n\"-p\"オプションでファイルの変更箇所が確認可能。",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash drop 0",
+    "text": "指定した番号のスタッシュを削除する。\nスタッシュの番号を省略した場合、\n最後に退避したスタッシュを削除する。\nスタッシュの番号はstash listから確認可能",
+    "remarks": "スタッシュ番号：0",
+    "pre":"0",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash clear",
+    "text": "すべてのスタッシュを削除する。",
+    "level": "2"
+  },
+  {
+    "category": "git stash",
+    "program": "git stash branch develop",
+    "text": "保存したスタッシュから新しいブランチを作成し、\n新規ブランチの作業ディレクトリに変更を適用する。",
+    "remarks": "ブランチ名：develop",
+    "pre": "develop",
+    "level": "2"
+  },
+  {
+    "category": "git tag",
+    "program": "git tag v1.0",
+    "text": "指定したタグ名で現在のコミットにタグを付けする。",
+    "remarks": "タグ名：v1.0",
+    "pre": "v1.0",
+    "level": "2"
+  },
+  {
+    "category": "git tag",
+    "program": "git tag -d v1.0",
+    "text": "指定したタグを削除する。",
+    "remarks": "タグ名：v1.0",
+    "pre": "v1.0",
+    "level": "2"
+  },
+  {
+    "category": "git rm",
+    "program": "git rm dir/file.txt",
+    "text": "指定したファイルを削除し、\nステージングエリアに追加する。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git rm",
+    "program": "git rm dir/file.txt",
+    "text": "ファイルを削除し、\nその変更をステージングエリアに登録する。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git rm",
+    "program": "git rm --cached dir/file.txt",
+    "text": "ファイルをステージングエリアから削除する。\n作業ディレクトリ内のファイルは削除しない。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir/file.txt",
+    "level": "2"
+  },
+  {
+    "category": "git rm",
+    "program": "git rm -r dir",
+    "text": "ディレクトリとその中のファイルを削除し、\nその変更をステージングエリアに追加する。",
+    "remarks": "ファイル名：dir/file.txt",
+    "pre": "dir",
+    "level": "2"
+  },
+  {
+    "category": "git clean",
+    "program": "git clean -n",
+    "text": "作業ディレクトリから未追跡のファイルを削除する前に、\n未追跡のファイルやディレクトリの一覧を表示する。\n実際に削除は行わない。",
+    "level": "2"
+  },
+  {
+    "category": "git clean",
+    "program": "git clean -f",
+    "text": "作業ディレクトリから未追跡のファイルやディレクトリを削除する。",
+    "level": "3"
+  },
+  {
+    "category": "git bisect",
+    "program": "git bisect",
+    "text": "バイナリーサーチを使用して問題のあるコミットを確認する。",
+    "level": "3"
+  },
+  {
+    "category": "git remote",
+    "program": "git remote add origin https://github.com/test/xxx.git",
+    "text": "指定した名前でリモートリポジトリを追加する。",
+    "remarks":"リモートリポジトリ名：origin、リモートリポジトリURL：https://github.com/test/xxx.git",
+    "pre": "origin https://github.com/test/xxx.git",
+    "level": "1"
+  },
+  {
+    "category": "git remote",
+    "program": "git remote remove origin",
+    "text": "指定したリモートリポジトリを削除する。",
+    "remarks":"リモートリポジトリ名：origin",
+    "pre": "origin",
+    "level": "2"
+  },
+  {
+    "category": "git remote",
+    "program": "git remote show origin",
+    "text": "リモートリポジトリの詳細情報を表示する。",
+    "remarks":"リモートリポジトリ名：origin",
+    "pre": "origin",
+    "level": "2"
+  },
+  {
+    "category": "git config",
+    "program": "git config --global alias.co checkout",
+    "text": "指定したエイリアス名でコマンドをエイリアスとして登録する。",
+    "remarks": "\nコマンド名：checkout、\nエイリアス：co",
+    "pre": "alias.co checkout",
+    "level": "2"
+  }
   ]
 }
+
+
+

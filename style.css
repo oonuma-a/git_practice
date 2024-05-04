@@ -27,41 +27,40 @@ hr{
 
 .main-wrapper{
     position: relative;
-    padding: 30px;
+    padding: 20px 30px;
     width: 85vw;
     border-radius: 5px;
     margin:10px auto;
     background-color: #fff;
     box-shadow: 0px 0px 15px #e9ecf0;
 }
-#explanation{
+#beginnerExplanation{
     margin: 0;
 }
-#explanation ul{
+#beginnerExplanation ul{
     margin: 10px auto;
     padding:0;
     width: 80vw;
 }
 
-#explanation_p{
+/* #beginnerExplanation p{
     display: block;
     padding: 1px 3px;
     width: fit-content;
     background-color: #fffd75;
-}
-#form_area{
+} */
+#level_select_area{
     margin:10px 0px 0px 0px;
     display: flex;
     flex-flow: column;
 }
 
 
-#select_area{
+.select_area{
     width:100%;
-    margin:125px auto auto auto;
-    margin:0;
+    margin:40px auto auto auto;
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 #beginner_btn,#intermediate_btn,#advanced_btn{
     margin: 5px 0 0 0;
@@ -69,6 +68,7 @@ hr{
     font-size:18px;
     border: 2px solid transparent;
     border-radius: 5px;
+    float: left;
 }
 
 #beginner_btn:hover{
@@ -107,18 +107,34 @@ hr{
 
 
 #beginner_btn,#intermediate_btn,#advanced_btn{
-    width: 15%;
+    width: 20%;
     height: 45px;
     margin: auto auto auto 0;
 }
 #beginner_text,#intermediate_text,#advanced_text{
-    width: 55%;
+    width: 100%;
     float: left;
-    margin: 0px auto 0 50px;
-    margin-left: 50px;
+    margin-left: 40px;
 }
 
-#modalBeginnerBtn{
+#beginnerModalBtn, #intermediateModalBtn{
+    width: 200px;
+    bottom: 30px;
+    right: 50px;
+    background-color: #fff;
+    color: #18d7b4;
+    border-color: #18d7b4;
+    border-radius: 5px;
+    padding: 10px;
+    float: right;
+    margin: auto;
+}
+#intermediateModalBtn {
+    color: #edbb16;
+    border-color: #edbb16;
+}
+
+#beginnerTopReturnBtn, #intermediateTopReturnBtn{
     width: 200px;
     bottom: 30px;
     right: 50px;
@@ -132,18 +148,9 @@ hr{
     margin: auto auto auto 0;
 }
 
-#topReturnBtn{
-    width: 200px;
-    bottom: 30px;
-    right: 50px;
-    background-color: #fff;
-    color: #18d7b4;
-    border-color: #18d7b4;
-    border-radius: 5px;
-    padding: 10px;
-    z-index: 1;
-    float: right;
-    margin: auto auto auto 0;
+#intermediateTopReturnBtn{
+    color: #edbb16;
+    border-color: #edbb16;
 }
 
 /* モーダル用 */
@@ -183,7 +190,7 @@ hr{
     cursor: pointer;
   }
 
-#showBeginnerListBtn {
+#hideListBtn {
     position: fixed;
     width: 200px;
     bottom: 30px;
@@ -193,14 +200,14 @@ hr{
     border: none;
     border-radius: 5px;
     padding: 10px;
-    z-index: 1;
+    z-index: 999;
 }
 
 
 /* Gitの解説用 */
 #commandList li {
     list-style: none;
-    margin: 30px 0 0 0;
+    margin: 40px 0 0 0;
 }
 #commandList li:first-child {
     margin: 0 0 0 0;
@@ -218,7 +225,11 @@ hr{
 .command-text {
     margin: 5px 0 0 0;
 }
-
+.command-remarks {
+    color: #555;
+    font-size: 13px;
+    margin: 0 0 5px 0;
+}
 /* .command-text:first-child {
     margin: 0 0 0 0;
 } */
@@ -239,6 +250,32 @@ hr{
     font-size: 13px;
     margin: 0 0 5px 0;
 }
+#btns {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#next_btn,
+#prev_btn,
+#end_btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+#end_btn {
+    background-color: #333;
+}
+
+
+
 
 /* 入力フォーム */
 #hidden_form {
@@ -274,9 +311,14 @@ hr{
   }
 
   #message {
-    margin-top: 20px;
+    height: 40px;
     color: #333;
     font-weight: bold;
+  }
+  #current_nums {
+    color: #333;
+    font-weight: bold;
+    text-align: center;
   }
   #hidden_form {
     background-color: white;
@@ -287,4 +329,15 @@ hr{
     color: white;
     border: 1px solid black; /* ボーダーを追加 */
     padding: 5px; /* 入力欄の余白を追加 */
+  }
+
+  #enterBtn {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  #about {
+    margin: 60px 0 0 0;
   }

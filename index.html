@@ -11,31 +11,34 @@
 <body>
 <div class="main-wrapper">
     <!-- 一覧ボタン -->
-<button id="showBeginnerListBtn" onclick="firstView()">一覧非表示</button>
+    <button id="hideListBtn" onclick="hideCommandList()">一覧非表示</button>
 
-
+    <!-- 出題用エリア -->
     <div id="question_area">
-        <!-- 出題用エリア -->
-        <!-- 表示メッセージ -->
-        <div id="message"></div>
 
         <!-- 非表示のフォーム -->
         <form id="hidden_form" style="display: none;">
+        <!-- 表示メッセージ -->
+        <div id ="current_nums"><span id ="current_num"></span>/<span id="all_num"></span></div>
+        <div id="message"></div>
+
         <p id="command_text"></p>
         <p id="command_remarks"></p>
         <p id="command_program"></p>
         <input type="text" id="input_text" name="input_text">
-        <input type="button" value="Enter" onclick="checkAnswer()">
+        <input id="enterBtn" type="button" value="Enter" onclick="checkAnswer()">
         </form>
 
-        <!-- 次へボタン -->
-        <button id="next_btn" style="display: none;" onclick="showNext()">次へ</button>
+        <div id = "btns">
+            <!-- 戻るボタン -->
+            <button id="prev_btn" style="visibility:hidden" onclick="showPrevious()">戻る</button>
 
-        <!-- 戻るボタン -->
-        <button id="prev_btn" style="display: none;" onclick="showPrevious()">戻る</button>
+            <!-- 次へボタン -->
+            <button id="next_btn" style="visibility:hidden" onclick="showNext()">次へ</button>
 
-        <!-- ボタン -->
-        <input type="button" id="end_btn" value="終了" onclick="endQuiz()" style="display: none;">
+            <!-- ボタン -->
+            <input type="button" id="end_btn" value="終了" onclick="endQuiz()" style="visibility:hidden">
+        </div>
     </div>
 
 
@@ -46,70 +49,191 @@
                 <h2>Gitコマンド学習ツール</h2>
             </div>
         </div>
-
-
-
-
-
         
-        <div id="form_area">
+        <div id="level_select_area">
             <!-- レベル選択エリア -->
-            <div id="select_area" style="position: relative;">
-                <input type="button" id="beginner_btn" value="入門レベルを学習" onclick="showForm(1)" style="float: left;">
+            <div class="select_area" style="position: relative;">
+                <input type="button" id="beginner_btn" value="入門編" onclick="showForm(1)">
                 <div id="beginner_text">
-                    <p>
-                        Gitで使用頻度が高い基本的なコマンド。<br>
-                        例：add、commit、checkout、pull、push
-                    </p>
+                    <div>
+                        <p>
+                            Gitで使用頻度が高い基本的なGitコマンドを出題します。<br>
+                            ブランチの操作や変更のコミット、プッシュなど基礎的なコマンドです。<br>
+                            例：add、commit、checkout、pull、push<br>
+                            全61問
+                        </p>
+                    </div>
+                    <div class="modalBtnArea">
+                        <button id="beginnerModalBtn" onclick="beginnerListModalBtn(1)">コマンド一覧を見る</button>
+                        <button id="beginnerTopReturnBtn" onclick="hideCommandList()">一覧非表示</button>
+                    </div>
                 </div>
-                <button id="modalBeginnerBtn" onclick="modalBtn(1)">一覧を見る</button>
-                <button id="topReturnBtn" onclick="firstView()">一覧非表示</button>
             </div>
 
+            <!-- 解説用のテキスト -->
+            <div id="beginnerExplanation">
+                <ul id="commandList">
+                    <li><h3 class="command-category">git add</h3><p class="command-text">作業ディレクトリ内にある変更をステージングエリアに追加する。<br>カレントディレクトリ以下の変更のみ次のコミットに含める。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>add .</p></div></li>
+                    <li><p class="command-text">指定したディレクトリパスとファイルをステージングエリアに追加する。<br>ステージングエリアに登録した特定のファイルの変更のみ次のコミットに含める。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>add dir/file.txt</p></div></li>
+                    <li><p class="command-text">指定したディレクトリ内のすべてのファイルをステージングエリアに追加する（ワイルドカード使用）</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>add dir/*</p></div></li>
+                    <li><p class="command-text">作業ディレクトリ内にある全てのファイルの変更をステージングエリアに追加する。<br>オプションでコマンドを実行しているカレントディレクトリの位置に関わらず作業ディレクトリ内にある全ての変更をステージングし、<br>次のコミットに含める。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>add -A</p></div></li>
+                    <li><h3 class="command-category">git commit</h3><p class="command-text">ステージングエリアに登録した変更をコミットする。<br>コマンド実行後にコミットメッセージを入力するためのエディタが開き、<br>保存するとコミットされる。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>commit</p></div></li>
+                    <li><p class="command-text">ステージングエリアに登録した変更をコミットする。<br>コミットメッセージをコマンドから直接入力する。</p><p class="command-remarks">メッセージ："message"</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>commit -m "message"</p></div></li>
+                    <li><p class="command-text">作業ディレクトリで変更された全てのファイルをステージングエリアに登録とコミットを行う。<br>コマンド実行後にコミットメッセージを入力するためのエディタが開き、<br>保存するとコミットされる。<br>新規作成したファイルはステージングエリアに登録されない。</p><p class="command-remarks">コミットメッセージ：message</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>commit -am "message"</p></div></li>
+                    <li><h3 class="command-category">git checkout</h3><p class="command-text">新しいブランチを作成する。<br>新しいブランチはコマンドを実行したHEADの位置から分岐し、<br>ブランチ作成後のブランチは現在のブランチに留まる。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>checkout develop<br>または<br><span class="git-string">git </span>branch develop</p></div></li>
+                    <li><p class="command-text">指定したコミットの特定のファイルを指定のディレクトリに復元する。<br>復元した変更はステージングには登録されていない状態で戻る。</p><p class="command-remarks">コミットID：COMMITID1、ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>checkout COMMITID1 dir/file.txt</p></div></li>
+                    <li><p class="command-text">指定した名前の既存のブランチに切り替える。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>checkout develop<br>または<br><span class="git-string">git </span>switch develop</p></div></li>
+                    <li><p class="command-text">指定した名前の新しいブランチを作成し、<br>新規ブランチに切り替える。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>checkout -b develop<br>または<br><span class="git-string">git </span>switch -c develop</p></div></li>
+                    <li><p class="command-text">ステージングエリアに反映されていない全てのファイルの変更を取り消して元の状態にリセットする（カレントディレクトリ配下）</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>checkout .<br>または<br><span class="git-string">git </span>restore .</p></div></li>
+                    <li><p class="command-text">現在のブランチに切り替える直前にいたブランチに戻る。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>checkout -<br>または<br><span class="git-string">git </span>switch -</p></div></li>
+                    <li><h3 class="command-category">git push</h3><p class="command-text">ローカルリポジトリの変更内容をリモートリポジトリにプッシュ（アップロード）する。<br>現在のブランチがトラッキングしているリモートリポジトリに変更をプッシュする。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>push</p></div></li>
+                    <li><p class="command-text">ローカルリポジトリの変更をリモートリポジトリのブランチにプッシュ（アップロード）する。</p><p class="command-remarks">リモートリポジトリ名：originブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>push origin master</p></div></li>
+                    <li><p class="command-text">ローカルリポジトリのブランチの変更をリモートリポジトリの同名ブランチにプッシュする。<br>コマンドを実行することで、<br>現在のブランチの変更がリモートリポジトリに反映される。</p><p class="command-remarks">リモートリポジトリ名：origin</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>push origin</p></div></li>
+                    <li><p class="command-text">ローカルリポジトリの指定したブランチの変更をリモートリポジトリの指定したブランチにプッシュする。</p><p class="command-remarks">ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>push master</p></div></li>
+                    <li><h3 class="command-category">git merge</h3><p class="command-text">指定したブランチの変更内容を現在のブランチに取り込み、<br>変更を統合する。</p><p class="command-remarks">ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>merge master</p></div></li>
+                    <li><p class="command-text">指定したリモートリポジトリのブランチを、<br>ローカルリポジトリにある現在のブランチにマージする。</p><p class="command-remarks">リモートリポジトリ名：origin ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>merge origin/master</p></div></li>
+                    <li><p class="command-text">ローカルリポジトリにある指定したブランチの変更を、<br>現在のブランチにマージする。</p><p class="command-remarks">ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>merge master</p></div></li>
+                    <li><h3 class="command-category">git branch</h3><p class="command-text">ローカルリポジトリのブランチ一覧を表示する。</p><p class="command-remarks">現在のブランチはアスタリスク (*) が付与。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>branch</p></div></li>
+                    <li><p class="command-text">ローカルとリモートのリポジトリにある全てのブランチを一覧表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>branch -a</p></div></li>
+                    <li><p class="command-text">リモートリポジトリのブランチ一覧を表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>branch -r</p></div></li>
+                    <li><p class="command-text">新しいブランチを作成する。<br>新しいブランチはコマンドを実行したHEADの位置から分岐し、<br>ブランチ作成後のブランチは現在のブランチに留まる。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>branch develop<br>または<br><span class="git-string">git </span>checkout develop</p></div></li>
+                    <li><h3 class="command-category">git switch</h3><p class="command-text">指定した名前の既存のブランチに切り替える。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>switch develop<br>または<br><span class="git-string">git </span>checkout develop</p></div></li>
+                    <li><p class="command-text">指定した名前の新しいブランチを作成し、<br>新規ブランチに切り替える。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>switch -c develop<br>または<br><span class="git-string">git </span>checkout -b develop</p></div></li>
+                    <li><p class="command-text">強制的にブランチを作成する。<br>指定したブランチ名が既に存在している場合でも、<br>強制的にブランチを上書きして作成する。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>switch -C develop</p></div></li>
+                    <li><p class="command-text">現在のブランチに切り替える直前にいたブランチに戻る。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>switch -<br>または<br><span class="git-string">git </span>checkout -</p></div></li>
+                    <li><h3 class="command-category">git restore</h3><p class="command-text">ステージングエリアに反映されていないファイルの変更を取り消して元の状態にリセットする（カレントディレクトリ配下）</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>restore .<br>または<br><span class="git-string">git </span>checkout .</p></div></li>
+                    <li><p class="command-text">ステージングエリアに反映されていない指定ファイルの変更を取り消して元の状態にリセットする。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>restore dir/file.txt</p></div></li>
+                    <li><p class="command-text">ステージングエリアに登録した変更ファイルのうち、<br>指定したファイルの変更を取り消して元の状態にリセットする。</p><p class="command-remarks">ワーキングディレクトリの変更は保持。ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>restore --staged dir/file.txt</p></div></li>
+                    <li><p class="command-text">指定したコミットまでの作業内容を削除して元の状態にリセットする。</p><p class="command-remarks">コミットID：COMMITID1</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>restore -S COMMITID1</p></div></li>
+                    <li><p class="command-text">ステージングエリアに登録されている指定したファイルの変更を最新のコミット状態にリセットする。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>restore --staged dir/file.txt</p></div></li>
+                    <li><h3 class="command-category">git reset</h3><p class="command-text">作業ディレクトリの変更は残したまま、<br>最後のコミットを取り消す。</p><p class="command-remarks">最後のコミット：HEAD~1</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reset HEAD~1</p></div></li>
+                    <li><p class="command-text">ステージングエリアに登録した変更を取り消す（指定のファイルのみ）</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reset dir/file.txt</p></div></li>
+                    <li><p class="command-text">指定したコミットIDまでの全ての変更を取り消す。</p><p class="command-remarks">git reflogからreset履歴が確認可能。コミットを--hardで削除した場合はresetしたコミットに復元可能。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reset --hard COMMITID1</p></div></li>
+                    <li><p class="command-text">直前のコミットを取り消して、<br>変更内容をステージングエリアに保持する。<br>コミット値に指定したコミットを削除する。<br>コミット値にHEAD^を指定することで直前のコミットを取り消す。</p><p class="command-remarks">直前のコミット：HEAD^</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reset --soft HEAD^</p></div></li>
+                    <li><p class="command-text">直前のコミットと変更内容を完全に削除する。<br>コミット値に指定した場合、<br>指定したコミットとステージングエリアに登録した変更、<br>作業ディレクトリの変更など作業中の内容を全てリセットする。<br>一度もコミットしていない変更をgit reset --hardで消した場合の復元 git fsck --lost-found→git show</p><p class="command-remarks">直前のコミット：HEAD^</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reset --hard HEAD^</p></div></li>
+                    <li><p class="command-text">作業ディレクトリの変更を保持したまま、<br>ステージングエリアに登録した変更を取り消す。</p><p class="command-remarks">コミット位置：HEAD</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reset --mixed HEAD</p></div></li>
+                    <li><h3 class="command-category">git log</h3><p class="command-text">コミットログ（履歴）を表示する。<br>リポジトリのコミット履歴を表示し、<br>各コミットの情報（コミットID、<br>コミットしたユーザー、<br>日時、<br>メッセージなど）を表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log</p></div></li>
+                    <li><p class="command-text">コミットログから指定したファイルの変更履歴のみ表示する。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log dir/file.txt</p></div></li>
+                    <li><p class="command-text">コミットログから現在のブランチに存在する変更履歴のみ表示する。</p><p class="command-remarks">ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log master</p></div></li>
+                    <li><p class="command-text">コミットログをコミット値とメッセージのみ一行の短縮形式で表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log --oneline</p></div></li>
+                    <li><p class="command-text">コミットログからコミットごとの変更内容を表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log -p</p></div></li>
+                    <li><p class="command-text">コミットログから指定した文字を含むコミットメッセージとコミット内容を検索する。</p><p class="command-remarks">検索キーワード：キーワード</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log -S キーワード</p></div></li>
+                    <li><p class="command-text">コミットログからマージコミットを除外して表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log --no-merges</p></div></li>
+                    <li><p class="command-text">指定した期間のコミットログを表示する。</p><p class="command-remarks">期間：yyyy-mm-01 yyyy-mm-02</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log —since=yyyy-mm-dd —until=yyyy-mm-dd</p></div></li>
+                    <li><h3 class="command-category">git pull</h3><p class="command-text">リモートリポジトリから最新の変更を取得し、<br>変更内容を適用する。<br>fetchとmergeを同時に行う。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>pull</p></div></li>
+                    <li><p class="command-text">指定したリモートリポジトリの指定したブランチから最新の変更を取得し、<br>変更内容を適用する。<br>fetchとmergeを同時に行う。</p><p class="command-remarks">リモートリポジトリ名：origin ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>pull origin master</p></div></li>
+                    <li><h3 class="command-category">git fetch</h3><p class="command-text">リモートリポジトリから最新の変更を取得する。<br>マージは行わない。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>fetch</p></div></li>
+                    <li><p class="command-text">リモートリポジトリから最新の変更を取得する。<br>マージは行わない。<br>リモートリポジトリで存在しない削除されたリモートブランチが、<br>ローカルリポジトリのリモート追跡ブランチリストから削除されます。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>fetch --prune</p></div></li>
+                    <li><h3 class="command-category">git status</h3><p class="command-text">現在の作業ディレクトリとステージングエリアに登録されている状態を表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>status</p></div></li>
+                    <li><p class="command-text">現在の作業ディレクトリとステージングエリアに登録されている状態を短縮形式で表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>status -s</p></div></li>
+                    <li><h3 class="command-category">git diff</h3><p class="command-text">作業ディレクトリと最新コミットの変更内容を表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff</p></div></li>
+                    <li><p class="command-text">ステージングエリアと最新コミットの差分を表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff --staged<br>または<br><span class="git-string">git </span>diff —-cached</p></div></li>
+                    <li><p class="command-text">現在の最新コミットと1つ前のコミットの間の差分を表示する。</p><p class="command-remarks">直前のコミット：HEAD^</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff HEAD^</p></div></li>
+                    <li><p class="command-text">指定した2つのローカルブランチ同士を比較する。</p><p class="command-remarks">ブランチ名：master、develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff master develop</p></div></li>
+                    <li><p class="command-text">ローカルリポジトリの指定したブランチとリモートリポジトリの指定したブランチを比較する。</p><p class="command-remarks">リモートリポジトリ名：origin ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff master origin/master</p></div></li>
+                    <li><p class="command-text">現在のローカルブランチとリモートブランチの差分を表示する。</p><p class="command-remarks">現在のローカルブランチ位置：HEAD、リモートリポジトリ名：origin、ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff HEAD origin/develop</p></div></li>
+                    <li><p class="command-text">作業ディレクトリ内の指定したファイルと最新のコミットとの差分を表示する。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff dir/file.txt</p></div></li>
+                    <li><h3 class="command-category">git remote</h3><p class="command-text">指定した名前でリモートリポジトリを追加する。</p><p class="command-remarks">リモートリポジトリ名：origin、リモートリポジトリURL：https://github.com/test/xxx.git</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>remote add origin https://github.com/test/xxx.git</p></div></li>
+                </ul>
+            </div>
 
-<!-- 解説用のテキスト -->
-<div id="explanation">
-    <ul id="commandList"></ul>
-</div>
-
-            <div id="select_area">
-                <input type="button" id="intermediate_btn" value="基本レベルを学習" onclick="showForm(2)">
+            <div class="select_area" style="position: relative;">
+                <input type="button" id="intermediate_btn" value="基礎編" onclick="showForm(2)">
                 <div id="intermediate_text">
-                    <p>
-                        様々な機能やオプションを利用し、さらに利便性が高くなるコマンド。覚えておくと便利なコマンド。<br>
-                        例：stash、<br>
-                        <button id="intermediateModalBtn" onclick="modalBtn(2)">一覧</button>
-                    </p>
-                </div>
-            </div>
-            <div id="select_area">
-                <input type="button" id="advanced_btn" value="応用レベルを学習" onclick="showForm(3)">
-                <div id="advanced_text">
-                    <p>
-                        基本の操作よりも細部の操作が可能になるコマンド<br>
-                        例：cherrypick、<br>
-                        <button id="advancedModal" onclick="modalBtn(3)">一覧</button>
-                    </p>
+                    <div>
+                        <p>
+                            様々なコマンドやオプションを利用して利便性が高くなるコマンドを出題します。<br>
+                            覚えておくとよりGitを使いこなせて便利になります。<br>
+                            例：stash、blame, commit --amend<br>
+                            全62問
+                        </p>
+                    </div>
+                    <div class="modalBtnArea">
+                        <button id="intermediateModalBtn" onclick="intermediateListModalBtn(2)">コマンド一覧を見る</button>
+                        <button id="intermediateTopReturnBtn" onclick="hideCommandList()">一覧非表示</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-
-<!-- モーダルのコンテンツ -->
-<div id="BeginnerModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <div>
-            <ul id="commandList"></ul>
+        <!-- 解説用のテキスト -->
+        <div id="intermediateExplanation">
+            <ul id="commandList">
+                <li><h3 class="command-category">git add</h3><p class="command-text">ステージングエリアに登録する時、<br>変更されたファイルをステージングする。<br>追跡中のファイルの変更のみが対象で、<br>新規追加されたファイルは含まない。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>add -u</p></div></li>
+                <li><h3 class="command-category">git commit</h3><p class="command-text">直前のコミットを修正して、<br>新しいコミット内容に修正する。</p><p class="command-remarks">リモートリポジトリにpush後の使用は非推奨。コミットメッセージ：message</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>commit --amend -m "message"</p></div></li>
+                <li><h3 class="command-category">git blame</h3><p class="command-text">ファイルの各行の編集情報を表示し、<br>誰が編集し、<br>どのコミットで編集したか表示します。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>blame dir/file.txt</p></div></li>
+                <li><p class="command-text">ファイルの各行の編集情報を表示し、<br>誰が編集し、<br>どのコミットで編集したか表示する。<br>オプションで何行目から何行目か指定した範囲の行におけるファイルの変更を表示する。</p><p class="command-remarks">行：10行目から12行目ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>blame -L 10,12 dir/file.txt</p></div></li>
+                <li><h3 class="command-category">git checkout</h3><p class="command-text">指定したブランチから指定したファイルまたはディレクトリを現在のブランチに反映する。</p><p class="command-remarks">ブランチ名：master、ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>checkout master dir/file.txt</p></div></li>
+                <li><p class="command-text">指定したファイルを変更前の最新のコミットの状態に戻す。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>checkout -- dir/file.txt</p></div></li>
+                <li><h3 class="command-category">git push(タグ)</h3><p class="command-text">指定したタグをリモートリポジトリにプッシュする。</p><p class="command-remarks">タグ名：v1.2.3</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>push origin v1.2.3</p></div></li>
+                <li><p class="command-text">ローカルで作成したタグをリモートリポジトリにプッシュする。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>push --tags:</p></div></li>
+                <li><h3 class="command-category">git merge</h3><p class="command-text">マージしたブランチのコミットを作成せず、<br>一つのコミットにまとめる。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>merge --squash</p></div></li>
+                <li><p class="command-text">マージ後にコンフリクトが発生した際、<br>発生したコンフリクトなどを解消せずに、<br>マージを中止します。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>merge —abort</p></div></li>
+                <li><p class="command-text">リモートブランチの変更をまとめて、<br>新しいコミットを現在のブランチに作成します。</p><p class="command-remarks">リモートリポジトリ名：origin、ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>merge --squash origin/master</p></div></li>
+                <li><p class="command-text">指定したブランチを現在のブランチにマージする時、<br>コミット全てのコミットを1つのコミットにまとめてマージする。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>merge --squash develop</p></div></li>
+                <li><h3 class="command-category">git branch</h3><p class="command-text">現在のブランチに既にマージされたブランチの一覧を表示する。</p><p class="command-remarks">ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>branch --merged master</p></div></li>
+                <li><p class="command-text">現在のブランチにまだマージされていないコミットが存在するブランチの一覧を表示する。</p><p class="command-remarks">ブランチ名：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>branch --no-merged master</p></div></li>
+                <li><p class="command-text">指定した名前のブランチを削除する。<br>マージされていない変更やコミットが存在する場合は削除せずエラーとなる。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>branch -d develop</p></div></li>
+                <li><p class="command-text">指定したブランチを強制的に削除する。<br>マージされていない変更やコミットが存在する場合も削除を行う。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>branch -D develop</p></div></li>
+                <li><h3 class="command-category">git cherry-pick</h3><p class="command-text">別のブランチにある指定したコミットを現在のブランチに直接取り込む。</p><p class="command-remarks">コミットID：COMMITID1</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>cherry-pick COMMITID1</p></div></li>
+                <li><p class="command-text">指定した始点のコミットから終点のコミットまでの範囲のコミットを現在のブランチに取り込む。</p><p class="command-remarks">コミットID：COMMITID1～COMMITID3</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>cherry-pick COMMITID1 COMMITID3</p></div></li>
+                <li><p class="command-text">チェリーピックを行う際に自動でコミットせず、<br>コミットの変更のみ作業ディレクトリに適用する。</p><p class="command-remarks">コミットID：COMMITID1</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>cherry-pick --no-commit COMMITID1</p></div></li>
+                <li><h3 class="command-category">git switch</h3><p class="command-text">現在のブランチから一時的に指定したコミットに戻る。<br>移動したコミットからから元のブランチに戻るにはgit switchでブランチを指定する。</p><p class="command-remarks">コミットID：COMMITID1</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>switch -d  COMMITID1</p></div></li>
+                <li><h3 class="command-category">git restore</h3><p class="command-text">ステージングエリアに登録されている指定したファイルの変更を取り消し、<br>指定したコミットIDの状態にリセットする。</p><p class="command-remarks">コミット：HEAD（現在いるブランチの位置）、ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>restore --source=HEAD dir/file.txt</p></div></li>
+                <li><h3 class="command-category">git reset</h3><p class="command-text">直前のマージやリベースの操作を取り消す。</p><p class="command-remarks">reset用の1つ前のコミット：ORIG_HEAD</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reset --hard ORIG_HEAD</p></div></li>
+                <li><h3 class="command-category">git log</h3><p class="command-text">コミットグラフを表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log --graph</p></div></li>
+                <li><p class="command-text">指定したユーザーが行ったコミットのみを表示する。<br>ユーザー名はgit logなどから確認可能。</p><p class="command-remarks">ユーザー名：user_name</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log --author=user_name</p></div></li>
+                <li><p class="command-text">指定したキーワードを含むコミットのみを表示する。</p><p class="command-remarks">キーワード：キーワード</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log --grep=キーワード</p></div></li>
+                <li><p class="command-text">コミットごとの変更の統計情報を表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>log --stat</p></div></li>
+                <li><h3 class="command-category">git reflog</h3><p class="command-text">ローカルリポジトリで実行された操作履歴のログを表示する。<br>コミットやリセット、<br>ブランチの切り替えなど過去に行った操作を表示し、<br>コミットやリセットの復元にログを使用する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reflog</p></div></li>
+                <li><p class="command-text">すべてのリモートトラッキングブランチを含む操作のログを表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>reflog --all</p></div></li>
+                <li><h3 class="command-category">git status</h3><p class="command-text">ブランチ名を含む現在の作業ディレクトリとステージングエリアに登録されている状態を短縮形式で表示する(-bのみの場合、<br>表示に変化なし)</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>status -sb</p></div></li>
+                <li><p class="command-text">現在の作業ディレクトリにある未追跡ファイルの状態を表示する(-bのみの場合、<br>表示に変化なし)</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>status -u</p></div></li>
+                <li><p class="command-text">詳細な形式でステージングエリアに登録されている状態を表示する（作業ディレクトリの変更除く）</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>status -v</p></div></li>
+                <li><h3 class="command-category">git diff</h3><p class="command-text">指定した2つのコミット間の差分を表示する。</p><p class="command-remarks">コミット1：COMMITID1、コミット2：COMMITID2</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff COMMITID1 COMMITID2</p></div></li>
+                <li><p class="command-text">指定したコミットIDの状態と現在の作業ディレクトリの状態を比較し、<br>差分を表示する。</p><p class="command-remarks">コミット：COMMITID1</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff -r COMMITID1</p></div></li>
+                <li><p class="command-text">diffで比較元とするブランチと比較先ブランチを入れ替える（比較対象の変更前・変更後を入れ替える）</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff -R</p></div></li>
+                <li><p class="command-text">変更した行の数、<br>情報を表示する<br> git diff ブランチ名|コミット値 --name-only<br>変更されたファイルのパスのみ表示</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>diff —stat</p></div></li>
+                <li><h3 class="command-category">git show</h3><p class="command-text">指定されたコミットの詳細情報（コミットのハッシュ値、<br>コミットしたユーザー、<br>日時、<br>コミットメッセージ、<br>変更内容）を表示する。</p><p class="command-remarks">コミットID：HEAD</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>show HEAD</p></div></li>
+                <li><h3 class="command-category">git rebase</h3><p class="command-text">現在のブランチのコミットのベースを、<br>分岐元の指定したブランチ（通常はリモートブランチ）から取り込んだ最新コミットを、<br>ブランチの先頭からリベースする。</p><p class="command-remarks">分岐元ブランチ：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rebase master</p></div></li>
+                <li><p class="command-text">指定したブランチのコミットのベースを、<br>分岐元の指定したブランチ（通常はリモートブランチ）から取り込んだ最新コミットを新たに分岐元としてブランチの先頭からリベースする。</p><p class="command-remarks">適用先ブランチ：develop、分岐元ブランチ：master</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rebase develop master</p></div></li>
+                <li><p class="command-text">指定したブランチからrebase 時に発生したコンフリクトがあった際、<br>コンフリクトを解消する修正をステージングエリアに登録し、<br>rebaseの内容を反映する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rebase --continue</p></div></li>
+                <li><p class="command-text">ブランチをrebase時、<br>コンフリクトが解消できない場合にコミットをスキップしてrebaseを続行する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rebase --skip</p></div></li>
+                <li><p class="command-text">ブランチをrebase 時、<br>コンフリクトが解消できない場合にrebaseを中断する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rebase --abort</p></div></li>
+                <li><h3 class="command-category">git revert</h3><p class="command-text">指定したコミットの変更を打ち消す新しいコミットを作成して適用する。<br>コマンド実行後は指定したコミットの変更を変更前の状態に戻す変更が適用された状態となる。</p><p class="command-remarks">コミットIDはgit reflog、git logなどから確認可能コミットID：COMMITID1</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>revert COMMITID1</p></div></li>
+                <li><h3 class="command-category">git stash</h3><p class="command-text">作業ディレクトリの変更を一時的に退避し、<br>作業ディレクトリを最新のコミット状態に戻す。<br>変更はスタッシュとして保存される。</p><p class="command-remarks">v2.16.0以降でgit stash save コマンドは非推奨</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash push</p></div></li>
+                <li><p class="command-text">スタッシュにコメントを指定して保存する。</p><p class="command-remarks">メッセージ：message</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash push -m "message"</p></div></li>
+                <li><p class="command-text">指定した番号のスタッシュした変更を取り出し、<br>作業ディレクトリに反映する。<br>取り出したスタッシュは削除する。<br>スタッシュの番号を省略した場合、<br>最後に退避したスタッシュを反映する。<br>スタッシュの番号はstash listから確認可能</p><p class="command-remarks">スタッシュ番号：0</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash pop 0</p></div></li>
+                <li><p class="command-text">指定したファイルをスタッシュに保存する。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash push dir/file.txt</p></div></li>
+                <li><p class="command-text">指定した番号のスタッシュの変更を反映する。<br>取り出したスタッシュは削除しない。<br>スタッシュの番号を省略した場合、<br>最後に退避したスタッシュを反映する。<br>スタッシュの番号はstash listから確認可能</p><p class="command-remarks">スタッシュ番号：1</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash apply 1</p></div></li>
+                <li><p class="command-text">スタッシュの一覧を表示する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash list</p></div></li>
+                <li><p class="command-text">スタッシュの変更内容を表示する。<br>"-p"オプションでファイルの変更箇所が確認可能。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash show</p></div></li>
+                <li><p class="command-text">指定した番号のスタッシュを削除する。<br>スタッシュの番号を省略した場合、<br>最後に退避したスタッシュを削除する。<br>スタッシュの番号はstash listから確認可能</p><p class="command-remarks">スタッシュ番号：0</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash drop 0</p></div></li>
+                <li><p class="command-text">すべてのスタッシュを削除する。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash clear</p></div></li>
+                <li><p class="command-text">保存したスタッシュから新しいブランチを作成し、<br>新規ブランチの作業ディレクトリに変更を適用する。</p><p class="command-remarks">ブランチ名：develop</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>stash branch develop</p></div></li>
+                <li><h3 class="command-category">git tag</h3><p class="command-text">指定したタグ名で現在のコミットにタグを付けする。</p><p class="command-remarks">タグ名：v1.0</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>tag v1.0</p></div></li>
+                <li><p class="command-text">指定したタグを削除する。</p><p class="command-remarks">タグ名：v1.0</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>tag -d v1.0</p></div></li>
+                <li><h3 class="command-category">git rm</h3><p class="command-text">指定したファイルを削除し、<br>ステージングエリアに追加する。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rm dir/file.txt</p></div></li>
+                <li><p class="command-text">ファイルを削除し、<br>その変更をステージングエリアに登録する。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rm dir/file.txt</p></div></li>
+                <li><p class="command-text">ファイルをステージングエリアから削除する。<br>作業ディレクトリ内のファイルは削除しない。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rm --cached dir/file.txt</p></div></li>
+                <li><p class="command-text">ディレクトリとその中のファイルを削除し、<br>その変更をステージングエリアに追加する。</p><p class="command-remarks">ファイル名：dir/file.txt</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>rm -r dir</p></div></li>
+                <li><h3 class="command-category">git clean</h3><p class="command-text">作業ディレクトリから未追跡のファイルを削除する前に、<br>未追跡のファイルやディレクトリの一覧を表示する。<br>実際に削除は行わない。</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>clean -n</p></div></li>
+                <li><h3 class="command-category">git remote</h3><p class="command-text">指定したリモートリポジトリを削除する。</p><p class="command-remarks">リモートリポジトリ名：origin</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>remote remove origin</p></div></li>
+                <li><p class="command-text">リモートリポジトリの詳細情報を表示する。</p><p class="command-remarks">リモートリポジトリ名：origin</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>remote show origin</p></div></li>
+                <li><h3 class="command-category">git config</h3><p class="command-text">指定したエイリアス名でコマンドをエイリアスとして登録する。</p><p class="command-remarks">コマンド名：checkout、エイリアス：co</p><div class="commandProgramDiv"><p class="command-program"><span class="git-string">git </span>config --global alias.co checkout</p></div></li></ul>
+            </ul>
         </div>
-    </div>
-</div>
-
-
-
-
-
     </div> 
+    <!-- サイト解説用のテキスト -->
+    <div id="about">
+        <h3>Gitコマンド学習ツールの使い方</h2>
+        <p>
+            当ページではgitコマンドの操作を実際にコマンド入力して学習できるWebアプリです。<br>
+            作者の主観でよく使うコマンドを入門・基本レベルで分類して出題します。<br>
+            出題するgitコマンドは一覧でも確認できます。<br>
+            問題はgitコマンドのレベル別に一覧の中から出題され、レベルを選択時にランダムで出題されます。
+        </p>
+    </div>
             
 </div>
 
