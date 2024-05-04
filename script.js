@@ -398,3 +398,20 @@ function endQuiz() {
   var form = document.getElementById('hidden_form');
   form.style.display = 'none';
 }
+
+
+/* 広告画像表示 */
+let img = new Array();
+img[0] = '<A HREF="https://px.a8.net/svt/ejp?a8mat=3Z6V1S+53DJ3M+348+6F1WI" rel="nofollow">LOLIPOP</A><img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=3Z6V1S+53DJ3M+348+6F1WI" alt="">';
+img[1] = '<a href="https://px.a8.net/svt/ejp?a8mat=3Z6V1S+64AELU+5EOC+BWVTE" rel="nofollow">楽天Kobo</a><img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=3Z6V1S+64AELU+5EOC+BWVTE" alt="">';
+img[2] = '<a href="https://px.a8.net/svt/ejp?a8mat=3Z6UA0+4MPE5U+32T6+5ZEMP" rel="nofollow"><img border="0" width="120" height="60" alt="" src="https://www26.a8.net/svt/bgt?aid=240504264280&wid=001&eno=01&mid=s00000014361001005000&mc=1"></a><img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=3Z6UA0+4MPE5U+32T6+5ZEMP" alt="">';
+img[3] = '<a href="https://px.a8.net/svt/ejp?a8mat=3NP6NS+1PX3OY+4RNG+5ZU29" rel="nofollow"><img border="0" width="120" height="60" alt="" src="https://www29.a8.net/svt/bgt?aid=221204728104&wid=001&eno=01&mid=s00000022246001007000&mc=1"></a><img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=3NP6NS+1PX3OY+4RNG+5ZU29" alt="">';
+img[4] = '<a href="https://px.a8.net/svt/ejp?a8mat=3NKZKO+FSKZHU+CO4+6CHB5" rel="nofollow"><img border="0" width="350" height="240" alt="" src="https://www25.a8.net/svt/bgt?aid=221008920955&wid=001&eno=01&mid=s00000001642001066000&mc=1"></a><img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=3NKZKO+FSKZHU+CO4+6CHB5" alt="">';
+img[5] = '<a href="https://px.a8.net/svt/ejp?a8mat=35DC04+EOOXYQ+50+2HQGAP" rel="nofollow"><img border="0" width="468" height="60" alt="" src="https://www28.a8.net/svt/bgt?aid=190418692888&wid=001&eno=01&mid=s00000000018015072000&mc=1"></a><img border="0" width="1" height="1" src="https://www15.a8.net/0.gif?a8mat=35DC04+EOOXYQ+50+2HQGAP" alt="">';
+
+/* 広告をランダムに表示させる関数 */
+img_random();
+function img_random(){
+num = Math.floor( Math.random() * img.length);
+document.getElementById("img_random").innerHTML = img[num];
+}
